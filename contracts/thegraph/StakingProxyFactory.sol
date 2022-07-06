@@ -13,44 +13,43 @@ contract StakingProxyFactory {
     IHamsterPool  private _hamsterPoolContract;
 
     //new staking distribution contract
-    function createStakingContract(address _indexerWalletAddress) {
+    function createStakingContract(address _indexerWalletAddress) public {
         require(stakingAddress[_indexerWalletAddress] != address(0), "This address has been pledged");
-        require(_amount >= 100000,"Minimum pledge 100000 GRT");
-        StakingDistribution stakingDistribution = new StakingDistribution;
-        stakingDistribution.setIndexerAddress(_indexerWalletAddress);
-        stakingAddress[_indexerWalletAddress] = stakingDistribution;
+        StakingDistribution stakingDistribution = new StakingDistribution(_indexerWalletAddress);
+        stakingAddress[_indexerWalletAddress] = stakingDistribution.getProxyAddress();
     }
 
-    function staking(address _indexerAccount,uint256 _tokens) {
+    function staking(address _indexerAccount,uint256 _tokens) public {
+        require(_tokens >= 100000,"Minimum pledge 100000 GRT");
         StakingDistribution proxyContract = StakingDistribution(stakingAddress[_indexerAccount]);
         proxyContract.staking(_tokens);
     }
 
-    function reStaking(address _account,uint256 _tokens) {
+    function reStaking(address _account,uint256 _tokens) public {
         StakingDistribution proxyContract = StakingDistribution(stakingAddress[_account]);
         proxyContract.rePledge(_tokens);
     }
 
-    function withdrawIncome(address _account,address _allocationID, bytes32 _poi) {
+    function withdrawIncome(address _account,address _allocationID, bytes32 _poi) public {
         StakingDistribution proxyContract = StakingDistribution(stakingAddress[_account]);
         proxyContract.withdrawIncome(_allocationID,_poi);
     }
 
-    function retrieveStaking(address _account,uint256 _tokens) {
+    function retrieveStaking(address _account,uint256 _tokens) public {
         StakingDistribution proxyContract = StakingDistribution(stakingAddress[_account]);
         proxyContract.retrieveStaking(_tokens);
     }
 
-    function setOperator(address _account,address _operator, bool _allowed) {
+    function setOperator(address _account,address _operator, bool _allowed) public {
         StakingDistribution proxyContract = StakingDistribution(stakingAddress[_account]);
         proxyContract.setOperator(_operator,_allowed);
     }
 
-    function hamsterStaking(address _account,uint256 _tokens) {
+    function hamsterStaking(address _account,uint256 _tokens) public {
         _hamsterPoolContract.staking(_account,_tokens);
     }
 
-    function hamsterIncomeWithdraw(address _account) {
+    function hamsterIncomeWithdraw(address _account) public {
         _hamsterPoolContract.withdraw(_account);
     }
 

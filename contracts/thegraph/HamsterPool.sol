@@ -1,8 +1,11 @@
+// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
+
 import "../lib/SafeMath.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "../config/Config.sol";
 import "./IHamsterPool.sol";
+
 contract HamsterPool is IHamsterPool{
     using SafeMath for uint256;
 
@@ -23,13 +26,18 @@ contract HamsterPool is IHamsterPool{
     address[] stakingAccount;
 
     Config private _configContract;
+
     // hamster coin token
     address token;
 
+    function _init(address _configAddress, address _hamsterCoinAddress) public {
+        _configContract = Config(_configAddress);
+        token = _hamsterCoinAddress;
+    }
 
 
     //staking hamster erc20
-    function staking(address _account,uint256 _tokens) {
+    function staking(address _account,uint256 _tokens) public override {
         require(IERC20(token).balanceOf(_account) >= _tokens,"Insufficient account balance");
         require(IERC20(token).transferFrom(_account,address(this),_tokens),"Pledge failed!");
         hamsterHolderStaking[_account] = hamsterHolderStaking[_account] + _tokens;
@@ -43,12 +51,12 @@ contract HamsterPool is IHamsterPool{
             }
         }
         if(!exist) {
-            stakingAccount.push(stakingAccount);
+            stakingAccount.push(_account);
         }
     }
 
     //distribution GRT income
-    function distributionGrt(address _proxyStakingContract, uint256 _tokens) {
+    function distributionGrt(address _proxyStakingContract, uint256 _tokens) public override {
         address grtAddress = _configContract.getGrtTokenAddress();
         require(IERC20(grtAddress).transferFrom(_proxyStakingContract,address(this),_tokens),"Failed to allocate income");
         if(stakingAccount.length != 0) {
@@ -61,16 +69,16 @@ contract HamsterPool is IHamsterPool{
         }
     }
     // Receive income
-    function withdraw(address _account) {
+    function withdraw(address _account) public override {
         uint256 amount = withdrawGrtMap[_account];
         require(amount>0,"Zero income");
         address grtAddress = _configContract.getGrtTokenAddress();
-        require(IERC20(grtAddress).balanceOf(address(this) >= amount),"Insufficient fund pool balance");
+        require(IERC20(grtAddress).balanceOf(address(this)) >= amount,"Insufficient fund pool balance");
         require(IERC20(grtAddress).transferFrom(address(this),_account,amount),"Failed to collect income");
         withdrawGrtMap[_account] = 0;
     }
 
-    function hamsterBalance() public view override returns(uint256){
+    function hamsterBalance() public view override returns(uint256) {
         return IERC20(token).balanceOf(address(this));
     }
 

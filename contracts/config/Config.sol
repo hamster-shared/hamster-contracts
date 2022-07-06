@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
 contract Config {
@@ -11,14 +12,11 @@ contract Config {
     //GRT token contract address
     address grtTokenAddress;
 
-    address rewardsContractAddress;
-
     //Set configuration information
-    function setConfigInfo(uint256 _allocationProportion, address _graphStakingAddress, address _grtTokenAddress, address _rewardsContractAddress) {
+    function setConfigInfo(uint256 _allocationProportion, address _graphStakingAddress, address _grtTokenAddress) public {
         allocationProportion = _allocationProportion;
         graphStakingAddress = _graphStakingAddress;
-        grtTokenAddress = _graphStakingAddress;
-        rewardsContractAddress = _rewardsContractAddress;
+        grtTokenAddress = _grtTokenAddress;
     }
 
     //get graph staking address
@@ -32,9 +30,5 @@ contract Config {
 
     function getAllocationProportion() public view returns(uint) {
         return allocationProportion;
-    }
-
-    function getRewardsAddress() public view returns(address) {
-        return rewardsContractAddress;
     }
 }
