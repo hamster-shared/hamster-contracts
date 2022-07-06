@@ -7,4 +7,6 @@ contract HamsterCoin is ERC20 {
     constructor() ERC20("HamsterCoin","Hamster") {
         _mint(msg.sender,666666);
     }
+
+
 }
