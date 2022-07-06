@@ -11,6 +11,7 @@
   "author": "liang teng",
   "license": "GPL-2.0-or-later",
   "dependencies": {
+    "@truffle/hdwallet-provider": "^2.0.10",
     "ethers": "^5.6.9"
   },
   "devDependencies": {
