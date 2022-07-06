@@ -24,11 +24,11 @@ contract StakingProxyFactory {
     function staking(address _indexerAccount,uint256 _tokens) {
         StakingDistribution proxyContract = StakingDistribution(stakingAddress[_indexerAccount]);
         proxyContract.staking(_tokens);
-        if(stakingAddress[_indexerAccount] == address(0)) {
-            proxyContract.setOperator(_indexerAccount,true);
-            proxyContract.setRewardsDestination();
-        }
+    }
 
+    function reStaking(address _account,uint256 _tokens) {
+        StakingDistribution proxyContract = StakingDistribution(stakingAddress[_account]);
+        proxyContract.rePledge(_tokens);
     }
 
     function withdrawIncome(address _account,address _allocationID, bytes32 _poi) {

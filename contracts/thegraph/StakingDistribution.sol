@@ -55,6 +55,19 @@ contract StakingDistribution {
         IStaking graphStaking = IStaking(_configContract.getGraphStakingAddress());
         graphStaking.stake(_stakingAmount);
         stakingAmount = stakingAmount + _stakingAmount;
+        graphStaking.setOperator(indexerWalletAddress,true);
+        graphStaking.setRewardsDestination(address(this));
+    }
+
+    function rePledge(uint256 _stakingAmount) {
+        require(_stakingAmount > 0,"!tokens");
+        address grtAddress = _configContract.getGrtTokenAddress();
+        require(IERC20(grtAddress).balanceOf(indexerWalletAddress) >= _stakingAmount,"Insufficient account balance");
+        //Transfer the GRT of indexer wallet to the address of this contract
+        require(IERC20(grtAddress).transferFrom(indexerWalletAddress,address(this),_stakingAmount),"staking: indexer transfer:" + address(this) + "failed");
+        IStaking graphStaking = IStaking(_configContract.getGraphStakingAddress());
+        graphStaking.stake(_stakingAmount);
+        stakingAmount = stakingAmount + _stakingAmount;
     }
 
 
