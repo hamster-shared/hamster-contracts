@@ -67,7 +67,7 @@ contract StakingDistribution {
         require(approve == true,"approve failed");
         //Transfer the GRT of indexer wallet to the address of this contract
         require(IERC20(grtAddress).transferFrom(indexerWalletAddress,address(this),_stakingAmount),"staking: indexer transfer failed");
-        IERC20(grtAddress).approve(_configContract.getGraphStakingAddress(),_stakingAmount);
+
         IStaking graphStaking = IStaking(_configContract.getGraphStakingAddress());
         graphStaking.stake(_stakingAmount);
         stakingAmount = _stakingAmount;
@@ -83,8 +83,6 @@ contract StakingDistribution {
         require(approve == true,"approve failed");
         //Transfer the GRT of indexer wallet to the address of this contract
         require(IERC20(grtAddress).transferFrom(indexerWalletAddress,address(this),_stakingAmount),"staking: indexer transfer failed");
-        IERC20(grtAddress).approve(_configContract.getGraphStakingAddress());
-
         IStaking graphStaking = IStaking(_configContract.getGraphStakingAddress());
         graphStaking.stake(_stakingAmount);
         stakingAmount = stakingAmount + _stakingAmount;

@@ -2,7 +2,6 @@
 pragma solidity ^0.8.0;
 import "./StakingDistribution.sol";
 import "../lib/SafeMath.sol";
-import "./IHamsterPool.sol";
 
 contract StakingProxyFactory {
     using SafeMath for uint256;
@@ -10,7 +9,6 @@ contract StakingProxyFactory {
     // indexer address => staking contract address
     mapping(address => address) stakingAddress;
 
-    IHamsterPool  private _hamsterPoolContract;
 
     address private configAddress;
 

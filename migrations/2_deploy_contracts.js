@@ -5,7 +5,7 @@ const StakingProxyFactory = artifacts.require("StakingProxyFactory")
 
 
 module.exports = function(deployer) {
-  deployer.deploy(HamsterCoin);
+  deployer.deploy(HamsterCoin,100000000000);
   deployer.deploy(Config);
   deployer.deploy(HamsterPool).then( pool =>{
     pool._init(Config.address, HamsterCoin.address)
