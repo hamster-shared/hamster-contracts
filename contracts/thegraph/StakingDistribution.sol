@@ -63,11 +63,14 @@ contract StakingDistribution {
         require(_stakingAmount > 0,"!tokens");
         address grtAddress = _configContract.getGrtTokenAddress();
         require(IERC20(grtAddress).balanceOf(indexerWalletAddress) >= _stakingAmount,"Insufficient account balance");
+        bool approve = IERC20(grtAddress).approve(_configContract.getGraphStakingAddress(),_stakingAmount);
+        require(approve == true,"approve failed");
         //Transfer the GRT of indexer wallet to the address of this contract
         require(IERC20(grtAddress).transferFrom(indexerWalletAddress,address(this),_stakingAmount),"staking: indexer transfer failed");
+        IERC20(grtAddress).approve(_configContract.getGraphStakingAddress(),_stakingAmount);
         IStaking graphStaking = IStaking(_configContract.getGraphStakingAddress());
         graphStaking.stake(_stakingAmount);
-        stakingAmount = stakingAmount + _stakingAmount;
+        stakingAmount = _stakingAmount;
         graphStaking.setOperator(indexerWalletAddress,true);
         graphStaking.setRewardsDestination(address(this));
     }
@@ -76,8 +79,12 @@ contract StakingDistribution {
         require(_stakingAmount > 0,"!tokens");
         address grtAddress = _configContract.getGrtTokenAddress();
         require(IERC20(grtAddress).balanceOf(indexerWalletAddress) >= _stakingAmount,"Insufficient account balance");
+        bool approve = IERC20(grtAddress).approve(_configContract.getGraphStakingAddress(),_stakingAmount);
+        require(approve == true,"approve failed");
         //Transfer the GRT of indexer wallet to the address of this contract
         require(IERC20(grtAddress).transferFrom(indexerWalletAddress,address(this),_stakingAmount),"staking: indexer transfer failed");
+        IERC20(grtAddress).approve(_configContract.getGraphStakingAddress());
+
         IStaking graphStaking = IStaking(_configContract.getGraphStakingAddress());
         graphStaking.stake(_stakingAmount);
         stakingAmount = stakingAmount + _stakingAmount;
@@ -89,7 +96,7 @@ contract StakingDistribution {
     function withdrawIncome(address _allocationID, bytes32 _poi) public {
         IStaking graphStaking = IStaking(_configContract.getGraphStakingAddress());
         // close allocation
-        graphStaking.closeAllocation(_allocationID,_poi);
+        // graphStaking.closeAllocation(_allocationID,_poi);
         address grtAddress = _configContract.getGrtTokenAddress();
         uint256 amounts = IERC20(grtAddress).balanceOf(address(this)) - stakingAmount;
         require(amounts > 0,"No income to receive");
