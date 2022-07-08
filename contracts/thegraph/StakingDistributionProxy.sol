@@ -7,7 +7,7 @@ import "../config/Config.sol";
 import "./IStaking.sol";
 import "./IHamsterPool.sol";
 
-contract StakingDistribution {
+contract StakingDistributionProxy {
     using SafeMath for uint256;
     // indexer wallet address
     address indexerWalletAddress;
