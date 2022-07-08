@@ -86,4 +86,8 @@ contract HamsterPool is IHamsterPool{
         address grtAddress = _configContract.getGrtTokenAddress();
         return IERC20(grtAddress).balanceOf(address(this));
     }
+
+    function getPoolAddress() public view override returns(address) {
+        return address(this);
+    }
 }

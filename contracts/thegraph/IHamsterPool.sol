@@ -12,4 +12,6 @@ interface IHamsterPool {
     function hamsterBalance() external view returns(uint256);
 
     function grtBalance() external view returns(uint256);
+
+    function getPoolAddress() external view  returns(address);
 }

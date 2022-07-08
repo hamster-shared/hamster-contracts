@@ -22,10 +22,14 @@ contract StakingProxyFactory {
 
     //new staking distribution contract
     function createStakingContract(address _indexerWalletAddress) public {
-        require(stakingAddress[_indexerWalletAddress] != address(0), "This address has been pledged");
+        require(stakingAddress[_indexerWalletAddress] == address(0), "This address has been pledged");
         StakingDistribution stakingDistribution = new StakingDistribution(_indexerWalletAddress);
         stakingAddress[_indexerWalletAddress] = stakingDistribution.getProxyAddress();
         stakingDistribution._init(configAddress,hamsterPoolAddress);
+    }
+
+    function getStakingAddress(address _indexerWalletAddress) public view returns (address) {
+        return stakingAddress[_indexerWalletAddress];
     }
 
 }

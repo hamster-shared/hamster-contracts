@@ -21,6 +21,8 @@ contract StakingDistribution {
 
     IHamsterPool private _hamsterPoolContract;
 
+    event Log(string);
+
 
     function _init(address _configContractAddress,address _hamsterPoolAddress) public {
         _configContract = Config(_configContractAddress);
@@ -52,6 +54,10 @@ contract StakingDistribution {
         return stakingAmount;
     }
 
+    function getAddress() public view returns(address) {
+        return indexerWalletAddress;
+    }
+
     // get proxy contract address balance
     function getBalance() public view  returns(uint256) {
         address grtAddress = _configContract.getGrtTokenAddress();
@@ -60,14 +66,15 @@ contract StakingDistribution {
 
     //Deposit GRT to this contract address and staking
     function staking(uint256 _stakingAmount) public {
+        emit Log("call method");
         require(_stakingAmount > 0,"!tokens");
         address grtAddress = _configContract.getGrtTokenAddress();
-        require(IERC20(grtAddress).balanceOf(indexerWalletAddress) >= _stakingAmount,"Insufficient account balance");
-        bool approve = IERC20(grtAddress).approve(_configContract.getGraphStakingAddress(),_stakingAmount);
-        require(approve == true,"approve failed");
+        uint256 balance = IERC20(grtAddress).balanceOf(indexerWalletAddress);
+        require(balance >= _stakingAmount,"Insufficient account balance");
         //Transfer the GRT of indexer wallet to the address of this contract
         require(IERC20(grtAddress).transferFrom(indexerWalletAddress,address(this),_stakingAmount),"staking: indexer transfer failed");
-
+        bool approve = IERC20(grtAddress).approve(_configContract.getGraphStakingAddress(),_stakingAmount);
+        require(approve == true,"approve failed");
         IStaking graphStaking = IStaking(_configContract.getGraphStakingAddress());
         graphStaking.stake(_stakingAmount);
         stakingAmount = _stakingAmount;
@@ -78,7 +85,8 @@ contract StakingDistribution {
     function rePledge(uint256 _stakingAmount) public {
         require(_stakingAmount > 0,"!tokens");
         address grtAddress = _configContract.getGrtTokenAddress();
-        require(IERC20(grtAddress).balanceOf(indexerWalletAddress) >= _stakingAmount,"Insufficient account balance");
+        uint256 balance = IERC20(grtAddress).balanceOf(indexerWalletAddress);
+        require(balance >= _stakingAmount,"Insufficient account balance");
         bool approve = IERC20(grtAddress).approve(_configContract.getGraphStakingAddress(),_stakingAmount);
         require(approve == true,"approve failed");
         //Transfer the GRT of indexer wallet to the address of this contract
@@ -91,16 +99,18 @@ contract StakingDistribution {
 
 
     //Receive income
-    function withdrawIncome(address _allocationID, bytes32 _poi) public {
-        IStaking graphStaking = IStaking(_configContract.getGraphStakingAddress());
+    function withdrawIncome() public {
+         // IStaking graphStaking = IStaking(_configContract.getGraphStakingAddress());
         // close allocation
         // graphStaking.closeAllocation(_allocationID,_poi);
         address grtAddress = _configContract.getGrtTokenAddress();
-        uint256 amounts = IERC20(grtAddress).balanceOf(address(this)) - stakingAmount;
+        uint256 amounts = IERC20(grtAddress).balanceOf(address(this));
         require(amounts > 0,"No income to receive");
         uint256 proportion = _configContract.getAllocationProportion();
         uint256 poolAmount = amounts.mul(proportion).div(100);
-        require(IERC20(grtAddress).transferFrom(address(this),indexerWalletAddress,(amounts - poolAmount)));
+        uint256 income = amounts - poolAmount;
+        require(IERC20(grtAddress).transfer(indexerWalletAddress,income));
+        IERC20(grtAddress).approve(_hamsterPoolContract.getPoolAddress(),poolAmount);
         //transfer to hamster pool
         _hamsterPoolContract.distributionGrt(address(this),poolAmount);
     }
@@ -108,12 +118,13 @@ contract StakingDistribution {
     //Withdrawal of pledge
     function retrieveStaking(uint256 _tokens) public {
         require(_tokens <= stakingAmount,"withdraw amount > staking amount");
-        uint256 tokens = IERC20(_configContract.getGrtTokenAddress()).balanceOf(address(this));
-        require(tokens >=_tokens,"withdraw staking failed");
+        address grtAddress = _configContract.getGrtTokenAddress();
+        uint256 withdrawBefore = IERC20(grtAddress).balanceOf(address(this));
         IStaking graphStaking = IStaking(_configContract.getGraphStakingAddress());
         graphStaking.unstake(_tokens);
         graphStaking.withdraw();
-        require(IERC20(_configContract.getGrtTokenAddress()).transferFrom(address(this),indexerWalletAddress,_tokens),"withdraw transfer indexer failed");
+        uint256 withdrawAfter = IERC20(grtAddress).balanceOf(address(this));
+        require(IERC20(grtAddress).transfer(indexerWalletAddress,_tokens),"withdraw transfer indexer failed");
         stakingAmount = stakingAmount - _tokens;
     }
 
@@ -123,8 +134,38 @@ contract StakingDistribution {
         graphStaking.setOperator(_operator,_allowed);
     }
 
+    function balance() public view returns(uint256) {
+        address grtToken = _configContract.getGrtTokenAddress();
+        return IERC20(grtToken).balanceOf(address(this));
+    }
+
     function setRewardsDestination() public {
         IStaking graphStaking = IStaking(_configContract.getGraphStakingAddress());
         graphStaking.setRewardsDestination(address(this));
     }
+
+    //income balance
+    function incomeBalance() public view returns(uint256) {
+        address grtAddress = _configContract.getGrtTokenAddress();
+        uint256 amounts = IERC20(grtAddress).balanceOf(address(this));
+        require(amounts > 0,"No income to receive");
+        uint256 proportion = _configContract.getAllocationProportion();
+        uint256 poolAmount = amounts.mul(proportion).div(100);
+        uint256 incomeBalance = amounts - poolAmount;
+        return incomeBalance;
+    }
+
+    function getGrtAddress() public view returns(address) {
+        return _configContract.getGrtTokenAddress();
+    }
+
+    function getIncome() public view returns(uint256) {
+        address grtAddress = _configContract.getGrtTokenAddress();
+        uint256 amounts = IERC20(grtAddress).balanceOf(address(this));
+        require(amounts > 0,"No income to receive");
+        uint256 proportion = _configContract.getAllocationProportion();
+        uint256 poolAmount = amounts.mul(proportion).div(100);
+        return poolAmount;
+    }
+
 }
