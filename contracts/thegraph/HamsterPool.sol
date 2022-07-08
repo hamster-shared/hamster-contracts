@@ -12,6 +12,8 @@ contract HamsterPool is IHamsterPool{
     // provider address => staking amount(hamster erc20)
     mapping(address => uint256) hamsterHolderStaking;
 
+    mapping(address => uint256) hamsterHolderWithdrawTime;
+
     // Total of pledged hammer erc20
     uint256 hamsterTokensAll;
 
@@ -53,6 +55,7 @@ contract HamsterPool is IHamsterPool{
         if(!exist) {
             stakingAccount.push(_account);
         }
+        hamsterHolderWithdrawTime[_account] = block.number;
     }
 
     //distribution GRT income
@@ -68,14 +71,32 @@ contract HamsterPool is IHamsterPool{
             distributionTokens = 0;
         }
     }
-    // Receive income
-    function withdraw(address _account) public override {
+
+    //receive grt income
+    function withdrawGrt(address _account) public override {
         uint256 amount = withdrawGrtMap[_account];
         require(amount>0,"Zero income");
         address grtAddress = _configContract.getGrtTokenAddress();
         require(IERC20(grtAddress).balanceOf(address(this)) >= amount,"Insufficient fund pool balance");
         require(IERC20(grtAddress).transferFrom(address(this),_account,amount),"Failed to collect income");
         withdrawGrtMap[_account] = 0;
+    }
+
+    // Receive staking hamster
+    function withdraw(address _account,uint256 _tokens) public override {
+        uint256 stakingAmount = hamsterHolderStaking[_account];
+        require(stakingAmount > 0, "No pledge amount can be collected");
+        require(stakingAmount >= _tokens,"The received amount exceeds the pledged amount");
+        uint256 thawingPeriod = hamsterHolderWithdrawTime[_account];
+        uint256 configTime = _configContract.getThawingTime();
+        require((block.number - thawingPeriod) > configTime,"Pledge cannot be retrieved within the freezing period");
+        require(IERC20(token).transfer(_account,_tokens),"transfer failed!");
+        if (_tokens == stakingAmount) {
+            hamsterHolderStaking[_account] = 0;
+            hamsterHolderWithdrawTime[_account] = 0;
+        } else {
+            hamsterHolderStaking[_account] = hamsterHolderStaking[_account] - _tokens;
+        }
     }
 
     function hamsterBalance() public view override returns(uint256) {

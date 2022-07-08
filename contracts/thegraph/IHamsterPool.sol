@@ -7,11 +7,13 @@ interface IHamsterPool {
 
     function distributionGrt(address _proxyStakingContract, uint256 _tokens) external;
 
-    function withdraw(address _account) external;
+    function withdraw(address _account,uint256 _tokens) external;
 
     function hamsterBalance() external view returns(uint256);
 
     function grtBalance() external view returns(uint256);
 
     function getPoolAddress() external view  returns(address);
+
+    function withdrawGrt(address _account) external;
 }

@@ -12,11 +12,15 @@ contract Config {
     //GRT token contract address
     address grtTokenAddress;
 
+    //Retrieve the thawing time of hammer coin
+    uint256 thawingTime;
+
     //Set configuration information
-    function setConfigInfo(uint256 _allocationProportion, address _graphStakingAddress, address _grtTokenAddress) public {
+    function setConfigInfo(uint256 _allocationProportion, address _graphStakingAddress, address _grtTokenAddress, uint256 _thawingTime) public {
         allocationProportion = _allocationProportion;
         graphStakingAddress = _graphStakingAddress;
         grtTokenAddress = _grtTokenAddress;
+        thawingTime = _thawingTime;
     }
 
     //get graph staking address
@@ -30,5 +34,9 @@ contract Config {
 
     function getAllocationProportion() public view returns(uint) {
         return allocationProportion;
+    }
+
+    function getThawingTime() public view returns(uint256) {
+        return thawingTime;
     }
 }
