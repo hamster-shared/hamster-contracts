@@ -119,11 +119,9 @@ contract StakingDistributionProxy {
     function retrieveStaking(uint256 _tokens) public {
         require(_tokens <= stakingAmount,"withdraw amount > staking amount");
         address grtAddress = _configContract.getGrtTokenAddress();
-        uint256 withdrawBefore = IERC20(grtAddress).balanceOf(address(this));
         IStaking graphStaking = IStaking(_configContract.getGraphStakingAddress());
         graphStaking.unstake(_tokens);
         graphStaking.withdraw();
-        uint256 withdrawAfter = IERC20(grtAddress).balanceOf(address(this));
         require(IERC20(grtAddress).transfer(indexerWalletAddress,_tokens),"withdraw transfer indexer failed");
         stakingAmount = stakingAmount - _tokens;
     }
@@ -134,18 +132,13 @@ contract StakingDistributionProxy {
         graphStaking.setOperator(_operator,_allowed);
     }
 
-    function balance() public view returns(uint256) {
-        address grtToken = _configContract.getGrtTokenAddress();
-        return IERC20(grtToken).balanceOf(address(this));
-    }
-
     function setRewardsDestination() public {
         IStaking graphStaking = IStaking(_configContract.getGraphStakingAddress());
         graphStaking.setRewardsDestination(address(this));
     }
 
-    //income balance
-    function incomeBalance() public view returns(uint256) {
+    //Gain income
+    function gainIncome() public view returns(uint256) {
         address grtAddress = _configContract.getGrtTokenAddress();
         uint256 amounts = IERC20(grtAddress).balanceOf(address(this));
         require(amounts > 0,"No income to receive");
