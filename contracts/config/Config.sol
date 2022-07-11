@@ -1,7 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-contract Config {
+import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
+
+contract Config is Initializable {
 
     //Distribution proportion
     uint allocationProportion;
@@ -14,6 +16,9 @@ contract Config {
 
     //Retrieve the thawing time of hammer coin
     uint256 thawingTime;
+
+    function initialize() public initializer {
+    }
 
     //Set configuration information
     function setConfigInfo(uint256 _allocationProportion, address _graphStakingAddress, address _grtTokenAddress, uint256 _thawingTime) public {
