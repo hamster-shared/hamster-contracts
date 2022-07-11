@@ -5,8 +5,9 @@ import "../lib/SafeMath.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "../config/Config.sol";
 import "./IHamsterPool.sol";
+import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 
-contract HamsterPool is IHamsterPool{
+contract HamsterPool is IHamsterPool, Initializable {
     using SafeMath for uint256;
 
     // provider address => staking amount(hamster erc20)
@@ -32,7 +33,7 @@ contract HamsterPool is IHamsterPool{
     // hamster coin token
     address token;
 
-    function _init(address _configAddress, address _hamsterCoinAddress) public {
+    function initialize(address _configAddress, address _hamsterCoinAddress) public initializer {
         _configContract = Config(_configAddress);
         token = _hamsterCoinAddress;
     }

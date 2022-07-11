@@ -3,8 +3,9 @@ pragma solidity ^0.8.0;
 import "./StakingDistributionProxy.sol";
 import "../lib/SafeMath.sol";
 import "./IStakingProxyFactory.sol";
+import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 
-contract StakingProxyFactory is IStakingProxyFactory{
+contract StakingProxyFactory is IStakingProxyFactory,Initializable{
     using SafeMath for uint256;
 
     // indexer address => staking contract address
@@ -16,7 +17,7 @@ contract StakingProxyFactory is IStakingProxyFactory{
     address private hamsterPoolAddress;
 
 
-    function _init(address _configAddress,address _hamsterPoolAddress) public {
+    function initialize(address _configAddress,address _hamsterPoolAddress) public initializer {
         configAddress = _configAddress;
         hamsterPoolAddress = _hamsterPoolAddress;
     }

@@ -2,15 +2,15 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import "@openzeppelin/contracts/token/ERC20/presets/ERC20PresetMinterPauser.sol";
+import "@openzeppelin/contracts-upgradeable/token/ERC20/presets/ERC20PresetMinterPauserUpgradeable.sol";
 
-contract HamsterCoin is ERC20PresetMinterPauser {
-    uint256 private _INITIAL_SUPPLY = 300000000 ether;
-    constructor() ERC20PresetMinterPauser("HamsterCoin", "Hamster") {
-        _mint(msg.sender, _INITIAL_SUPPLY);
-    }
+contract HamsterCoin is ERC20PresetMinterPauserUpgradeable {
 
     event TransferToHamster(address indexed from, address indexed to, uint256 value,string polkadotAddress);
+
+    function initialize() public initializer {
+        ERC20PresetMinterPauserUpgradeable.initialize("HamsterCoin", "Hamster");
+    }
 
     /**
    * @dev Destroys `amount` tokens from the caller.
