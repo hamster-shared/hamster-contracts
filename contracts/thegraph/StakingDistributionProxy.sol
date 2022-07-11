@@ -6,8 +6,9 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "../config/Config.sol";
 import "./IStaking.sol";
 import "./IHamsterPool.sol";
+import "./IStakingDistributionProxy.sol";
 
-contract StakingDistributionProxy {
+contract StakingDistributionProxy is IStakingDistributionProxy{
     using SafeMath for uint256;
     // indexer wallet address
     address indexerWalletAddress;
@@ -36,7 +37,7 @@ contract StakingDistributionProxy {
 
 
     //save indexer staking address
-    function setIndexerAddress(address _indexerWalletAddress) public {
+    function setIndexerAddress(address _indexerWalletAddress) public override{
         indexerWalletAddress = _indexerWalletAddress;
     }
 
@@ -46,11 +47,11 @@ contract StakingDistributionProxy {
     }
 
     // get proxy staking address
-    function getProxyAddress() public view returns (address) {
+    function getProxyAddress() public view override returns (address) {
         return address(this);
     }
 
-    function getStakingAmount() public view returns(uint256) {
+    function getStakingAmount() public view override returns(uint256) {
         return stakingAmount;
     }
 
@@ -59,13 +60,13 @@ contract StakingDistributionProxy {
     }
 
     // get proxy contract address balance
-    function getBalance() public view  returns(uint256) {
+    function getBalance() public view override returns(uint256) {
         address grtAddress = _configContract.getGrtTokenAddress();
         return IERC20(grtAddress).balanceOf(address(this));
     }
 
     //Deposit GRT to this contract address and staking
-    function staking(uint256 _stakingAmount) public {
+    function staking(uint256 _stakingAmount) public override {
         emit Log("call method");
         require(_stakingAmount > 0,"!tokens");
         address grtAddress = _configContract.getGrtTokenAddress();
@@ -82,7 +83,7 @@ contract StakingDistributionProxy {
         graphStaking.setRewardsDestination(address(this));
     }
 
-    function rePledge(uint256 _stakingAmount) public {
+    function rePledge(uint256 _stakingAmount) public override {
         require(_stakingAmount > 0,"!tokens");
         address grtAddress = _configContract.getGrtTokenAddress();
         uint256 balance = IERC20(grtAddress).balanceOf(indexerWalletAddress);
@@ -99,7 +100,7 @@ contract StakingDistributionProxy {
 
 
     //Receive income
-    function withdrawIncome() public {
+    function withdrawIncome() public override {
          // IStaking graphStaking = IStaking(_configContract.getGraphStakingAddress());
         // close allocation
         // graphStaking.closeAllocation(_allocationID,_poi);
@@ -116,7 +117,7 @@ contract StakingDistributionProxy {
     }
 
     //Withdrawal of pledge
-    function retrieveStaking(uint256 _tokens) public {
+    function retrieveStaking(uint256 _tokens) public override {
         require(_tokens <= stakingAmount,"withdraw amount > staking amount");
         address grtAddress = _configContract.getGrtTokenAddress();
         IStaking graphStaking = IStaking(_configContract.getGraphStakingAddress());
@@ -127,7 +128,7 @@ contract StakingDistributionProxy {
     }
 
     //set operator
-    function setOperator(address _operator, bool _allowed) public {
+    function setOperator(address _operator, bool _allowed) public override {
         IStaking graphStaking = IStaking(_configContract.getGraphStakingAddress());
         graphStaking.setOperator(_operator,_allowed);
     }
@@ -138,7 +139,7 @@ contract StakingDistributionProxy {
     }
 
     //Gain income
-    function gainIncome() public view returns(uint256) {
+    function gainIncome() public view override returns(uint256) {
         address grtAddress = _configContract.getGrtTokenAddress();
         uint256 amounts = IERC20(grtAddress).balanceOf(address(this));
         require(amounts > 0,"No income to receive");
