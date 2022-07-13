@@ -2,8 +2,9 @@
 pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
 
-contract Config is Initializable {
+contract Config is Initializable,Ownable {
 
     //Distribution proportion
     uint allocationProportion;
@@ -21,7 +22,7 @@ contract Config is Initializable {
     }
 
     //Set configuration information
-    function setConfigInfo(uint256 _allocationProportion, address _graphStakingAddress, address _grtTokenAddress, uint256 _thawingTime) public {
+    function setConfigInfo(uint256 _allocationProportion, address _graphStakingAddress, address _grtTokenAddress, uint256 _thawingTime) public onlyOwner {
         allocationProportion = _allocationProportion;
         graphStakingAddress = _graphStakingAddress;
         grtTokenAddress = _grtTokenAddress;

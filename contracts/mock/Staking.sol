@@ -12,6 +12,7 @@ contract Staking is IStaking{
     event Log(string);
     event Log(uint256);
     event Log(address);
+    event Log(bool);
 
     constructor (address _grtAddress) {
         grtToken = _grtAddress;
@@ -43,6 +44,7 @@ contract Staking is IStaking{
     function setOperator(address _operator, bool _allowed) external override {
         emit Log("set operate:");
         emit Log(_operator);
+        emit Log(_allowed);
     }
 
     function setRewardsDestination(address _destination) external override {

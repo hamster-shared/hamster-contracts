@@ -79,7 +79,9 @@ contract HamsterPool is IHamsterPool, Initializable {
         require(amount>0,"Zero income");
         address grtAddress = _configContract.getGrtTokenAddress();
         require(IERC20(grtAddress).balanceOf(address(this)) >= amount,"Insufficient fund pool balance");
-        require(IERC20(grtAddress).transferFrom(address(this),_account,amount),"Failed to collect income");
+//        require(IERC20(grtAddress).approve(_account,amount),"approve failed");
+//        require(IERC20(grtAddress).transfer(_account,amount),"Failed to collect income");
+        require(IERC20(grtAddress).transfer(_account,amount),"Failed to collect income");
         withdrawGrtMap[_account] = 0;
     }
 
@@ -111,5 +113,14 @@ contract HamsterPool is IHamsterPool, Initializable {
 
     function getPoolAddress() public view override returns(address) {
         return address(this);
+    }
+
+
+    function getAccountGrt(address _account) public view override returns(uint256) {
+        return withdrawGrtMap[_account];
+    }
+
+    function getStakingBalance(address _account) public view override returns(uint256) {
+        return hamsterHolderStaking[_account];
     }
 }
