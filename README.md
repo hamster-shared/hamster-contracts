@@ -1,0 +1,16 @@
+## Network|rinkeby (id|4)
+
+|contract|addresss|
+|---|---|
+|Config|0xA0fe59d6e7b68A9bE162673e62dDb2A06f8153cC|
+|HamsterCoin|0x58DC15156C520cB4d18Df8807419c1989B05c960|
+|HamsterPool|0x511579eBA8CD965Cdd96953770A568FE5FCbfc4c|
+|Migrations|0x1829BebB484Ed84659abaaB5D2e84F939485a1aD|
+|StakingProxyFactory|0xeFF0ed9Fc8276Fcf4eda2e012dD065A3DC18591D|
+
+
+### MOCK
+|contract|addresss|
+|---|---|
+|GrtToken|0xBC720b05067Ee8980219Bd63756d606E5b18EEcC|
+|Staking|0xc92F966e982d3E5dE85d1A0BBaE27E4d8AD7d9D7|

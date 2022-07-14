@@ -19,6 +19,7 @@ contract Config is Initializable,OwnableUpgradeable {
     uint256 thawingTime;
 
     function initialize() public initializer {
+        __Ownable_init();
     }
 
     //Set configuration information
