@@ -24,6 +24,8 @@ contract StakingDistributionProxy is IStakingDistributionProxy{
 
     event Log(string);
 
+    uint256 unStakeAmount;
+
 
     function _init(address _configContractAddress,address _hamsterPoolAddress) public {
         _configContract = Config(_configContractAddress);
@@ -142,11 +144,14 @@ contract StakingDistributionProxy is IStakingDistributionProxy{
     function gainIncome() public view override returns(uint256) {
         address grtAddress = _configContract.getGrtTokenAddress();
         uint256 amounts = IERC20(grtAddress).balanceOf(address(this));
-        require(amounts > 0,"No income to receive");
-        uint256 proportion = _configContract.getAllocationProportion();
-        uint256 poolAmount = amounts.mul(proportion).div(100);
-        uint256 incomeBalance = amounts - poolAmount;
-        return incomeBalance;
+        if (amounts > 0) {
+            require(amounts > 0,"No income to receive");
+            uint256 proportion = _configContract.getAllocationProportion();
+            uint256 poolAmount = amounts.mul(proportion).div(100);
+            uint256 incomeBalance = amounts - poolAmount;
+            return incomeBalance;
+        }
+        return 0;
     }
 
     function getGrtAddress() public view returns(address) {
@@ -160,6 +165,27 @@ contract StakingDistributionProxy is IStakingDistributionProxy{
         uint256 proportion = _configContract.getAllocationProportion();
         uint256 poolAmount = amounts.mul(proportion).div(100);
         return poolAmount;
+    }
+
+    //unstake tokens
+    function unstake(uint256 _tokens) public override {
+        require((unStakeAmount + _tokens) <= stakingAmount,"withdraw amount > staking amount");
+        IStaking graphStaking = IStaking(_configContract.getGraphStakingAddress());
+        graphStaking.unstake(_tokens);
+        unStakeAmount = unStakeAmount + _tokens;
+    }
+
+    //get unstaking amount
+    function getUnStakingAmount() public view returns(uint256) {
+        return unStakeAmount;
+    }
+    // withdraw stake GRT
+    function withdraw() public override {
+        IStaking graphStaking = IStaking(_configContract.getGraphStakingAddress());
+        graphStaking.withdraw();
+        require(IERC20(_configContract.getGrtTokenAddress()).transfer(indexerWalletAddress,unStakeAmount),"withdraw transfer indexer failed");
+        stakingAmount = stakingAmount - unStakeAmount;
+        unStakeAmount = 0;
     }
 
 }

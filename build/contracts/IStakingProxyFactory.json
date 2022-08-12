@@ -1,0 +1,250 @@
+{
+  "contractName": "IStakingProxyFactory",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_indexerWalletAddress",
+          "type": "address"
+        }
+      ],
+      "name": "createStakingContract",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_indexerWalletAddress",
+          "type": "address"
+        }
+      ],
+      "name": "getStakingAddress",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "metadata": "{\"compiler\":{\"version\":\"0.8.15+commit.e14f2714\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_indexerWalletAddress\",\"type\":\"address\"}],\"name\":\"createStakingContract\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_indexerWalletAddress\",\"type\":\"address\"}],\"name\":\"getStakingAddress\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/contracts/thegraph/IStakingProxyFactory.sol\":\"IStakingProxyFactory\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[]},\"sources\":{\"project:/contracts/thegraph/IStakingProxyFactory.sol\":{\"keccak256\":\"0x3c61f0198abb3805b5a5be578a990a84c6cb66427c5e6c298951aca2fe7d7eab\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://2d88839fcefde955165ce4bffe3e13610c3ce4137254f6291851e7601e9e977b\",\"dweb:/ipfs/QmWz9F41FfrkuxGKCT38qK72886nd71gjmWq68tYidEuRV\"]}},\"version\":1}",
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "immutableReferences": {},
+  "generatedSources": [],
+  "deployedGeneratedSources": [],
+  "sourceMap": "",
+  "deployedSourceMap": "",
+  "source": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.0;\n\n\ninterface IStakingProxyFactory {\n\n    function createStakingContract(address _indexerWalletAddress) external;\n\n    function getStakingAddress(address _indexerWalletAddress) external view returns (address);\n}\n",
+  "sourcePath": "/home/sunjianguo/GolandProjects/hamster-contracts/contracts/thegraph/IStakingProxyFactory.sol",
+  "ast": {
+    "absolutePath": "project:/contracts/thegraph/IStakingProxyFactory.sol",
+    "exportedSymbols": {
+      "IStakingProxyFactory": [
+        6813
+      ]
+    },
+    "id": 6814,
+    "license": "MIT",
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 6800,
+        "literals": [
+          "solidity",
+          "^",
+          "0.8",
+          ".0"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "32:23:45"
+      },
+      {
+        "abstract": false,
+        "baseContracts": [],
+        "canonicalName": "IStakingProxyFactory",
+        "contractDependencies": [],
+        "contractKind": "interface",
+        "fullyImplemented": false,
+        "id": 6813,
+        "linearizedBaseContracts": [
+          6813
+        ],
+        "name": "IStakingProxyFactory",
+        "nameLocation": "68:20:45",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "functionSelector": "4a4cef40",
+            "id": 6805,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "createStakingContract",
+            "nameLocation": "105:21:45",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 6803,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 6802,
+                  "mutability": "mutable",
+                  "name": "_indexerWalletAddress",
+                  "nameLocation": "135:21:45",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 6805,
+                  "src": "127:29:45",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 6801,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "127:7:45",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "126:31:45"
+            },
+            "returnParameters": {
+              "id": 6804,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "166:0:45"
+            },
+            "scope": 6813,
+            "src": "96:71:45",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "functionSelector": "7465cf97",
+            "id": 6812,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getStakingAddress",
+            "nameLocation": "182:17:45",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 6808,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 6807,
+                  "mutability": "mutable",
+                  "name": "_indexerWalletAddress",
+                  "nameLocation": "208:21:45",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 6812,
+                  "src": "200:29:45",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 6806,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "200:7:45",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "199:31:45"
+            },
+            "returnParameters": {
+              "id": 6811,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 6810,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 6812,
+                  "src": "254:7:45",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 6809,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "254:7:45",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "253:9:45"
+            },
+            "scope": 6813,
+            "src": "173:90:45",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          }
+        ],
+        "scope": 6814,
+        "src": "58:207:45",
+        "usedErrors": []
+      }
+    ],
+    "src": "32:234:45"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.8.15+commit.e14f2714.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.4.8",
+  "updatedAt": "2022-07-29T06:40:11.375Z",
+  "devdoc": {
+    "kind": "dev",
+    "methods": {},
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  }
+}

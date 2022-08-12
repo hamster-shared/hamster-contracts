@@ -22,4 +22,10 @@ interface IStakingDistributionProxy {
     function setOperator(address _operator, bool _allowed) external;
 
     function gainIncome() external view returns(uint256);
+
+    function unstake(uint256 _tokens) external;
+
+    function getUnStakingAmount() external view returns(uint256);
+
+    function withdraw() external;
 }

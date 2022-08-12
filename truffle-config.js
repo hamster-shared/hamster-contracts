@@ -26,7 +26,7 @@ module.exports = {
             skipDryRun: true     // Skip dry run before migrations? (default: false for public nets )
         },
         rinkeby: {
-            provider: () => new HDWalletProvider(testMnemonic, `https://eth-rinkeby.alchemyapi.io/v2/aVUIrFeeNyFD0T87zh6_iZ4Ws_tghX7A`),
+            provider: () => new HDWalletProvider(testMnemonic, `https://rinkeby.infura.io/v3/af7a79eb36f64e609b5dda130cd62946`),
             network_id: 4,       // Ropsten's id
             gas: 5500000,        // Ropsten has a lower block limit than mainnet
             confirmations: 2,    // # of confs to wait between deployments. (default: 0)
