@@ -6,9 +6,9 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "../config/Config.sol";
 import "./IStaking.sol";
 import "./IHamsterPool.sol";
-import "./IStakingDistributionProxy.sol";
+import "./IStakingDistribution.sol";
 
-contract StakingDistributionProxy is IStakingDistributionProxy{
+contract StakingDistribution is IStakingDistribution{
     using SafeMath for uint256;
     // indexer wallet address
     address indexerWalletAddress;

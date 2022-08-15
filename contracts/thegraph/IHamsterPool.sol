@@ -3,6 +3,7 @@ pragma solidity ^0.8.0;
 
 interface IHamsterPool {
 
+
     function staking(address _account,uint256 _tokens) external;
 
     function distributionGrt(address _proxyStakingContract, uint256 _tokens) external;
@@ -20,4 +21,6 @@ interface IHamsterPool {
     function getAccountGrt(address _account) external view  returns(uint256);
 
     function getStakingBalance(address _account) external view returns(uint256);
+
+    function getUnallocatedAmount() external view returns(uint256);
 }

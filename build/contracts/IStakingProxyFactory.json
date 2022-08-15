@@ -34,7 +34,7 @@
       "type": "function"
     }
   ],
-  "metadata": "{\"compiler\":{\"version\":\"0.8.15+commit.e14f2714\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_indexerWalletAddress\",\"type\":\"address\"}],\"name\":\"createStakingContract\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_indexerWalletAddress\",\"type\":\"address\"}],\"name\":\"getStakingAddress\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/contracts/thegraph/IStakingProxyFactory.sol\":\"IStakingProxyFactory\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[]},\"sources\":{\"project:/contracts/thegraph/IStakingProxyFactory.sol\":{\"keccak256\":\"0x3c61f0198abb3805b5a5be578a990a84c6cb66427c5e6c298951aca2fe7d7eab\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://2d88839fcefde955165ce4bffe3e13610c3ce4137254f6291851e7601e9e977b\",\"dweb:/ipfs/QmWz9F41FfrkuxGKCT38qK72886nd71gjmWq68tYidEuRV\"]}},\"version\":1}",
+  "metadata": "{\"compiler\":{\"version\":\"0.8.16+commit.07a7930e\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_indexerWalletAddress\",\"type\":\"address\"}],\"name\":\"createStakingContract\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_indexerWalletAddress\",\"type\":\"address\"}],\"name\":\"getStakingAddress\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/contracts/thegraph/IStakingProxyFactory.sol\":\"IStakingProxyFactory\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[]},\"sources\":{\"project:/contracts/thegraph/IStakingProxyFactory.sol\":{\"keccak256\":\"0x3c61f0198abb3805b5a5be578a990a84c6cb66427c5e6c298951aca2fe7d7eab\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://2d88839fcefde955165ce4bffe3e13610c3ce4137254f6291851e7601e9e977b\",\"dweb:/ipfs/QmWz9F41FfrkuxGKCT38qK72886nd71gjmWq68tYidEuRV\"]}},\"version\":1}",
   "bytecode": "0x",
   "deployedBytecode": "0x",
   "immutableReferences": {},
@@ -48,15 +48,15 @@
     "absolutePath": "project:/contracts/thegraph/IStakingProxyFactory.sol",
     "exportedSymbols": {
       "IStakingProxyFactory": [
-        6813
+        6869
       ]
     },
-    "id": 6814,
+    "id": 6870,
     "license": "MIT",
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 6800,
+        "id": 6856,
         "literals": [
           "solidity",
           "^",
@@ -73,9 +73,9 @@
         "contractDependencies": [],
         "contractKind": "interface",
         "fullyImplemented": false,
-        "id": 6813,
+        "id": 6869,
         "linearizedBaseContracts": [
-          6813
+          6869
         ],
         "name": "IStakingProxyFactory",
         "nameLocation": "68:20:45",
@@ -83,7 +83,7 @@
         "nodes": [
           {
             "functionSelector": "4a4cef40",
-            "id": 6805,
+            "id": 6861,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
@@ -91,17 +91,17 @@
             "nameLocation": "105:21:45",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 6803,
+              "id": 6859,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 6802,
+                  "id": 6858,
                   "mutability": "mutable",
                   "name": "_indexerWalletAddress",
                   "nameLocation": "135:21:45",
                   "nodeType": "VariableDeclaration",
-                  "scope": 6805,
+                  "scope": 6861,
                   "src": "127:29:45",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -110,7 +110,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 6801,
+                    "id": 6857,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "127:7:45",
@@ -126,12 +126,12 @@
               "src": "126:31:45"
             },
             "returnParameters": {
-              "id": 6804,
+              "id": 6860,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "166:0:45"
             },
-            "scope": 6813,
+            "scope": 6869,
             "src": "96:71:45",
             "stateMutability": "nonpayable",
             "virtual": false,
@@ -139,7 +139,7 @@
           },
           {
             "functionSelector": "7465cf97",
-            "id": 6812,
+            "id": 6868,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
@@ -147,17 +147,17 @@
             "nameLocation": "182:17:45",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 6808,
+              "id": 6864,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 6807,
+                  "id": 6863,
                   "mutability": "mutable",
                   "name": "_indexerWalletAddress",
                   "nameLocation": "208:21:45",
                   "nodeType": "VariableDeclaration",
-                  "scope": 6812,
+                  "scope": 6868,
                   "src": "200:29:45",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -166,7 +166,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 6806,
+                    "id": 6862,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "200:7:45",
@@ -182,17 +182,17 @@
               "src": "199:31:45"
             },
             "returnParameters": {
-              "id": 6811,
+              "id": 6867,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 6810,
+                  "id": 6866,
                   "mutability": "mutable",
                   "name": "",
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
-                  "scope": 6812,
+                  "scope": 6868,
                   "src": "254:7:45",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -201,7 +201,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 6809,
+                    "id": 6865,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "254:7:45",
@@ -216,14 +216,14 @@
               ],
               "src": "253:9:45"
             },
-            "scope": 6813,
+            "scope": 6869,
             "src": "173:90:45",
             "stateMutability": "view",
             "virtual": false,
             "visibility": "external"
           }
         ],
-        "scope": 6814,
+        "scope": 6870,
         "src": "58:207:45",
         "usedErrors": []
       }
@@ -232,11 +232,11 @@
   },
   "compiler": {
     "name": "solc",
-    "version": "0.8.15+commit.e14f2714.Emscripten.clang"
+    "version": "0.8.16+commit.07a7930e.Emscripten.clang"
   },
   "networks": {},
   "schemaVersion": "3.4.8",
-  "updatedAt": "2022-07-29T06:40:11.375Z",
+  "updatedAt": "2022-08-12T09:29:39.826Z",
   "devdoc": {
     "kind": "dev",
     "methods": {},

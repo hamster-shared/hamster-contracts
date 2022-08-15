@@ -5,7 +5,6 @@ import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 
 contract Config is Initializable,OwnableUpgradeable {
-
     //Distribution proportion
     uint allocationProportion;
 
@@ -45,5 +44,13 @@ contract Config is Initializable,OwnableUpgradeable {
 
     function getThawingTime() public view returns(uint256) {
         return thawingTime;
+    }
+
+    function setAllocationProportion(uint256 _allocationProportion) public onlyOwner {
+        allocationProportion = _allocationProportion;
+    }
+
+    function setThawingTime(uint256 _thawingTime) public onlyOwner {
+        thawingTime = _thawingTime;
     }
 }

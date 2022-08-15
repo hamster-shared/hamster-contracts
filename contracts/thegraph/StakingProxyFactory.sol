@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
-import "./StakingDistributionProxy.sol";
+import "./StakingDistribution.sol";
 import "../lib/SafeMath.sol";
 import "./IStakingProxyFactory.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
@@ -25,7 +25,7 @@ contract StakingProxyFactory is IStakingProxyFactory,Initializable{
     //new staking distribution contract
     function createStakingContract(address _indexerWalletAddress) public override{
         require(stakingAddress[_indexerWalletAddress] == address(0), "This address has been pledged");
-        StakingDistributionProxy stakingDistribution = new StakingDistributionProxy(_indexerWalletAddress);
+        StakingDistribution stakingDistribution = new StakingDistribution(_indexerWalletAddress);
         stakingAddress[_indexerWalletAddress] = stakingDistribution.getProxyAddress();
         stakingDistribution._init(configAddress,hamsterPoolAddress);
     }

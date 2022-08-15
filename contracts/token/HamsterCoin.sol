@@ -21,4 +21,11 @@ contract HamsterCoin is ERC20PresetMinterPauserUpgradeable {
         _burn(_msgSender(), amount);
         emit TransferToHamster(_msgSender(), address(0), amount, polkadotAddress);
     }
+
+    /**
+    * @dev Returns the decimals places of the token.
+     */
+    function decimals() public view virtual override returns (uint8) {
+        return 12;
+    }
 }
